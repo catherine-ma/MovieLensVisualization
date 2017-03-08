@@ -49,7 +49,7 @@ def plot2D(best_movies, V):
 	plt.title("Ten Best Movies Visualization")
 	plt.xlabel(r"$v_1$")
 	plt.ylabel(r"$v_2$")
-	plt.show()
+	plt.savefig("images\\best_movies_2D.png")
 
 
 def main():
