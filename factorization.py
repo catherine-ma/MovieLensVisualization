@@ -46,8 +46,22 @@ def train():
         write_data("vmatrix.txt", V.tolist())
         write_data("err.txt", err)
 
+def problem5part1projection():
+    V = read_data("vmatrix.txt")
+    U = read_data("umatrix.txt")
+    
+    A, S, B = np.linalg.svd(V)
+    twocol = A.T[:2]
+    Uproj = np.dot(twocol, np.array(U).T)
+    Vproj = np.dot(twocol, V)
+    
+    print Uproj
+    print Vproj
 
+    write_data("uproj.txt", Uproj.tolist())
+    write_data("vproj.txt", Vproj.tolist())
+
+    
 if __name__ == "__main__":
-    train()
-
+    problem5part1projection()
 
