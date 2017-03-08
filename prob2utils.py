@@ -12,6 +12,7 @@ def grad_V(Vj, Yij, Ui, reg, eta):
 
 def get_err(U, V, Y):
     err = 0.0
+    # for (i,j), Yij in np.ndenumerate(Y):
     for (i,j,Yij) in Y:
         err += 0.5 *(Yij - np.dot(U[i-1], V[:,j-1]))**2
     return err / float(len(Y))
