@@ -42,10 +42,10 @@ def plot2D(best_movies, V, dest):
     Y = [0 for i in range(len(best_movies))]
     names = [0 for i in range(len(best_movies))]
     for i in range(len(best_movies)):
-	mov_idx   = int(best_movies[i][0])
+	mov_id   = int(best_movies[i][0])
 	names[i] = best_movies[i][1]
-	X[i] = V[mov_idx][0]
-	Y[i] = V[mov_idx][1]
+	X[i] = V[mov_id][0]
+	Y[i] = V[mov_id][1]
     plt.figure(figsize=(12, 12))
     plt.scatter(X, Y)
     plt.title("Ten Best Movies Visualization")
