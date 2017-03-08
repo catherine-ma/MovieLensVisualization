@@ -42,13 +42,13 @@ def train():
         print V
         print err
 
-        write_data("umatrix.txt", U.tolist())
-        write_data("vmatrix.txt", V.tolist())
-        write_data("err.txt", err)
+        write_data("umatrix.json", U.tolist())
+        write_data("vmatrix.json", V.tolist())
+        write_data("err.json", err)
 
 def problem5part1projection():
-    V = read_data("vmatrix.txt")
-    U = read_data("umatrix.txt")
+    V = read_data("vmatrix.json")
+    U = read_data("umatrix.json")
     
     A, S, B = np.linalg.svd(V)
     twocol = A.T[:2]
@@ -58,8 +58,8 @@ def problem5part1projection():
     print Uproj
     print Vproj
 
-    write_data("uproj.txt", Uproj.tolist())
-    write_data("vproj.txt", Vproj.tolist())
+    write_data("uproj.json", Uproj.tolist())
+    write_data("vproj.json", Vproj.tolist())
 
     
 if __name__ == "__main__":
