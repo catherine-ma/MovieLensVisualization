@@ -87,6 +87,25 @@ def hist_ratings(ratings, xylabel, dest):
 	plt.text(xylabel[0], xylabel[1], "mean   = " + str(mean) + "\nmedian = " + str(med))
 	plt.savefig(dest)
 	plt.show()
+
+# Add box plot of the ratings
+def box_ratings(ratings, dest, which="all"):
+	plt.boxplot(ratings)	
+	plt.ylim(0, 6)
+	plt.ylabel("Rating")
+	if which == "all":
+		plt.title("All Ratings Distribution")
+	elif which == "pop_best":
+		plt.title("Popular Ratings vs. Best Ratings Distributions")
+		plt.text(1, 5.5, "Popular")
+		plt.text(2, 5.5, "Best")
+	elif which == "genre":
+		plt.title("Distributions by Genre")
+		plt.text(1, 5.5, "Animation")
+		plt.text(2, 5.5, "Drama")
+		plt.text(3, 5.5, "Horror")
+	plt.savefig(dest)
+	plt.show()
 	
 if __name__ == '__main__':
 	movies = process_data(movie_data)
@@ -109,6 +128,11 @@ if __name__ == '__main__':
 	# hist_ratings(animation_ratings, [.2, 1200], "images\\animation_ratings_hist.png")
 	# hist_ratings(drama_ratings, [.2, 9000], "images\\drama_ratings_hist.png")
 	# hist_ratings(horror_ratings, [.2, 1600], "images\\horror_ratings.png")
+
+	# box_ratings(all_ratings, "images\\all_ratings_box.png")
+	box_ratings([pop_ratings, best_ratings], 
+	            "images\\pop_v_best_ratings_box.png", which="pop_best", )
+	
 
 
 
