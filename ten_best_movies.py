@@ -40,7 +40,7 @@ def get_ten_best_movies(movies, ratings, n_rates=1):
 	best_movies[i] = movies[movie_idx]
     return best_movies
 
-def plot2D(best_movies, V, dest, xlo=None, xhi=None, ylo=None, yhi=None):
+def plot2D(best_movies, V, dest, xlo=None, xhi=None, ylo=None, yhi=None, nrate=1):
     X = [0 for i in range(len(best_movies))]
     Y = [0 for i in range(len(best_movies))]
     names = [0 for i in range(len(best_movies))]
@@ -51,7 +51,10 @@ def plot2D(best_movies, V, dest, xlo=None, xhi=None, ylo=None, yhi=None):
 	Y[i] = V[mov_id][1]
     plt.figure(figsize=(12, 12))
     plt.scatter(X, Y)
-    plt.title("Ten Best Movies Visualization")
+    if nrate > 1:
+	plt.title("Ten Best Movies Visualization With " + str(nrate) + "+ Ratings")
+    else:
+	plt.title("Ten Best Movies Visualization")
     plt.xlabel(r"$v_1$")
     plt.ylabel(r"$v_2$")
     if xlo and xhi:
@@ -61,13 +64,14 @@ def plot2D(best_movies, V, dest, xlo=None, xhi=None, ylo=None, yhi=None):
     for name, x, y, in zip(names, X, Y):
 	print name, x, y
 	if name == '"Wrong Trousers, The (1993)"':
-	    print "yes"
-	    loc = (x, y + 2)
+	    loc = (x, y + .04)
+	elif name == 'Rear Window (1954)':
+	    loc = (x, y + .02)
 	else:
 	    loc = (x, y)
 	plt.annotate(name, xy=loc, textcoords='offset points', va='bottom')
-    #plt.savefig(dest)
-    plt.show()
+    plt.savefig(dest)
+    #plt.show()
 
 def main():
     movies = b.process_data(b.movie_data)
@@ -76,6 +80,6 @@ def main():
     #best_movies = get_ten_best_movies(movies, ratings)
     #plot2D(best_movies, V, "images\\best_movies_2D.png")
     best_movies_req = get_ten_best_movies(movies, ratings, n_rates=50)
-    plot2D(best_movies_req, V, "images\\best_movies_nrate_50.png", 1.9, 3.2, -2, 1)
+    plot2D(best_movies_req, V, "images\\best_movies_nrate_50.png", 1.9, 3.2, -2, 1, 50)
     
 main()

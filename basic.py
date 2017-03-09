@@ -78,13 +78,16 @@ def get_genre_ratings(movies, ratings, genre):
 	return genre_ratings
 
 
-def plot_ratings(ratings):
+def hist_ratings(ratings, xylabel, dest):
 	n, bins, patches = plt.hist(ratings, bins=5, range=(0.5, 5.5), facecolor='green')
-	print bins
+	mean = np.mean(ratings)
+	med  = np.median(ratings)
 	plt.xlabel('rating')
 	plt.ylabel('count')
+	plt.text(xylabel[0], xylabel[1], "mean   = " + str(mean) + "\nmedian = " + str(med))
+	plt.savefig(dest)
 	plt.show()
-
+	
 if __name__ == '__main__':
 	movies = process_data(movie_data)
 	ratings = process_data(rating_data)
@@ -100,12 +103,12 @@ if __name__ == '__main__':
 	drama_ratings = get_genre_ratings(movies, ratings, drama)
 	horror_ratings = get_genre_ratings(movies, ratings, horror)
 
-	# plot_ratings(all_ratings)
-	# plot_ratings(pop_ratings)
-	# plot_ratings(best_ratings)
-	# plot_ratings(animation_ratings)
-	# plot_ratings(drama_ratings)
-	# plot_ratings(horror_ratings)
+	# hist_ratings(all_ratings, [.2, 30000], "images\\all_ratings_hist.png")
+	# hist_ratings(pop_ratings, [.2, 1600], "images\\pop_ratings_hist.png")
+	# hist_ratings(best_ratings, [.2, 14], "images\\best_ratings.png")
+	# hist_ratings(animation_ratings, [.2, 1200], "images\\animation_ratings_hist.png")
+	# hist_ratings(drama_ratings, [.2, 9000], "images\\drama_ratings_hist.png")
+	# hist_ratings(horror_ratings, [.2, 1600], "images\\horror_ratings.png")
 
 
 
