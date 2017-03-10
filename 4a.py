@@ -9,8 +9,8 @@ def read_data(dest):
     with open(dest, 'r') as f:
         return json.load(f)
 
-U = read_data('uproj.txt')
-V = read_data('vproj.txt')
+U = read_data('uproj.json')
+V = read_data('vproj.json')
 
 def process_data(file_name):
     return np.loadtxt(file_name, dtype=str, delimiter='\t')
