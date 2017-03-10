@@ -39,7 +39,7 @@ def get_ten_pop_movies(movies, ratings):
 	return pop_ratings
 
 # Returns list of ratings of best movies
-def get_ten_best_movies(movies, ratings):
+def get_ten_best_movies(movies, ratings, n_rates=1):
 	movie_ratings = [0 for i in range(len(movies))]
 	num_ratings = [0 for i in range(len(movies))]
 
@@ -52,7 +52,8 @@ def get_ten_best_movies(movies, ratings):
 	avg_ratings = []
 
 	for i in range(len(movie_ratings)):
-		avg_ratings.append((i, movie_ratings[i] / num_ratings[i]))
+		if num_ratings[i] >= n_rates:
+			avg_ratings.append((i, movie_ratings[i] / num_ratings[i]))
 
 	best_movies = heapq.nlargest(10, avg_ratings, key=operator.itemgetter(1))
 	best_movies = [best_movies[i][0] for i in range(len(best_movies))]
@@ -99,7 +100,9 @@ def box_ratings(ratings, dest, which="all"):
 	elif which == "pop_best":
 		plt.title("Popular Ratings vs. Best Ratings Distributions")
 		plt.text(.9, 5.5, "Popular")
-		plt.text(1.95, 5.5, "Best")
+		plt.text(1.92, 5.5, "Best")
+		plt.text(2.3, 5.5, "Best with Minimum 50 Ratings")
+		plt.xlim(0, 4)
 	elif which == "genre":
 		plt.title("Distributions by Genre")
 		plt.text(.9, 5.5, "Animation")
@@ -119,21 +122,23 @@ if __name__ == '__main__':
 	all_ratings = get_all_ratings(ratings)
 	pop_ratings = get_ten_pop_movies(movies, ratings)
 	best_ratings = get_ten_best_movies(movies, ratings)
+	best_ratings_50 = get_ten_best_movies(movies, ratings, n_rates=50)
 	animation_ratings = get_genre_ratings(movies, ratings, animation)
 	drama_ratings = get_genre_ratings(movies, ratings, drama)
 	horror_ratings = get_genre_ratings(movies, ratings, horror)
 	genre_ratings = [animation_ratings, drama_ratings, horror_ratings]
 
-	hist_ratings(all_ratings, [.2, 30000], "images\\all_ratings_hist.png")
+	# hist_ratings(all_ratings, [.2, 30000], "images\\all_ratings_hist.png")
 	# hist_ratings(pop_ratings, [.2, 1600], "images\\pop_ratings_hist.png")
 	# hist_ratings(best_ratings, [.2, 14], "images\\best_ratings.png")
+	# hist_ratings(best_ratings_50, [.2, 1200], "images\\best_ratings_nrate_50.png")
 	# hist_ratings(animation_ratings, [.2, 1200], "images\\animation_ratings_hist.png")
 	# hist_ratings(drama_ratings, [.2, 9000], "images\\drama_ratings_hist.png")
 	# hist_ratings(horror_ratings, [.2, 1600], "images\\horror_ratings.png")
 
 	#box_ratings(all_ratings, "images\\all_ratings_box.png")
-	#box_ratings([pop_ratings, best_ratings], 
-	#            "images\\pop_v_best_ratings_box.png", which="pop_best", )
+	box_ratings([pop_ratings, best_ratings, best_ratings_50], 
+	            "images\\pop_v_best_ratings_box.png", which="pop_best")
 	#box_ratings(genre_ratings, "images\\drama_ratings_box.png", which="genre")
 
 
