@@ -80,6 +80,7 @@ def get_genre_ratings(movies, ratings, genre):
 
 def hist_ratings(ratings, xylabel, dest):
 	n, bins, patches = plt.hist(ratings, bins=5, range=(0.5, 5.5), facecolor='green')
+	print n / sum(n)
 	mean = np.mean(ratings)
 	med  = np.median(ratings)
 	plt.xlabel('rating')
@@ -90,20 +91,20 @@ def hist_ratings(ratings, xylabel, dest):
 
 # Add box plot of the ratings
 def box_ratings(ratings, dest, which="all"):
-	plt.boxplot(ratings)	
+	plt.boxplot(ratings, showmeans=True)	
 	plt.ylim(0, 6)
 	plt.ylabel("Rating")
 	if which == "all":
 		plt.title("All Ratings Distribution")
 	elif which == "pop_best":
 		plt.title("Popular Ratings vs. Best Ratings Distributions")
-		plt.text(1, 5.5, "Popular")
-		plt.text(2, 5.5, "Best")
+		plt.text(.9, 5.5, "Popular")
+		plt.text(1.95, 5.5, "Best")
 	elif which == "genre":
 		plt.title("Distributions by Genre")
-		plt.text(1, 5.5, "Animation")
-		plt.text(2, 5.5, "Drama")
-		plt.text(3, 5.5, "Horror")
+		plt.text(.9, 5.5, "Animation")
+		plt.text(1.9, 5.5, "Drama")
+		plt.text(2.9, 5.5, "Horror")
 	plt.savefig(dest)
 	plt.show()
 	
@@ -121,18 +122,19 @@ if __name__ == '__main__':
 	animation_ratings = get_genre_ratings(movies, ratings, animation)
 	drama_ratings = get_genre_ratings(movies, ratings, drama)
 	horror_ratings = get_genre_ratings(movies, ratings, horror)
+	genre_ratings = [animation_ratings, drama_ratings, horror_ratings]
 
-	# hist_ratings(all_ratings, [.2, 30000], "images\\all_ratings_hist.png")
+	hist_ratings(all_ratings, [.2, 30000], "images\\all_ratings_hist.png")
 	# hist_ratings(pop_ratings, [.2, 1600], "images\\pop_ratings_hist.png")
 	# hist_ratings(best_ratings, [.2, 14], "images\\best_ratings.png")
 	# hist_ratings(animation_ratings, [.2, 1200], "images\\animation_ratings_hist.png")
 	# hist_ratings(drama_ratings, [.2, 9000], "images\\drama_ratings_hist.png")
 	# hist_ratings(horror_ratings, [.2, 1600], "images\\horror_ratings.png")
 
-	# box_ratings(all_ratings, "images\\all_ratings_box.png")
-	box_ratings([pop_ratings, best_ratings], 
-	            "images\\pop_v_best_ratings_box.png", which="pop_best", )
-	
+	#box_ratings(all_ratings, "images\\all_ratings_box.png")
+	#box_ratings([pop_ratings, best_ratings], 
+	#            "images\\pop_v_best_ratings_box.png", which="pop_best", )
+	#box_ratings(genre_ratings, "images\\drama_ratings_box.png", which="genre")
 
 
 
